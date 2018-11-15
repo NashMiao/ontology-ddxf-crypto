@@ -1,8 +1,29 @@
 # 本体去中心化数据交易框架密码学组件
 
-## 1. 基于 ONTID 的加解密服务
+[English](README.md) | 中文
 
-### 1.1. 加密流程
+<!-- TOC -->
+
+- [1. 本体分布式身份框架 （ONT ID）](#1-本体分布式身份框架-ont-id)
+- [2. 基于 ONTID 的加解密服务](#2-基于-ontid-的加解密服务)
+    - [2.1. 加密流程](#21-加密流程)
+    - [2.2. 解密流程](#22-解密流程)
+- [3. 基于口令的密钥派生函数 （PBKDF）](#3-基于口令的密钥派生函数-pbkdf)
+- [4. 基于椭圆曲线的整合加密方案（ECIES）](#4-基于椭圆曲线的整合加密方案ecies)
+
+<!-- /TOC -->
+
+## 1. 本体分布式身份框架 （ONT ID）
+
+本体身份数字身份标识（简称为 ONT ID）是一个建立在 W3C 数字身份标识规范基础之上的分布式身份标识协议。ONT ID 为每个实体建立了一个以密码学为基础的数字身份，实现了数据授权的自主性以及所有权的确认，这使得身份和数据成为了用户真正可以控制的资产。
+
+如果你对 ONT ID 感兴趣，你可以在[这里](https://ontio.github.io/documentation/ontology_DID_zh.html)找到更多的信息。
+
+<div align=center><img height="400" src="img/ontid.jpg"/></div>
+
+## 2. 基于 ONTID 的加解密服务
+
+### 2.1. 加密流程
 
 数据的加密有三个主要步骤:
 
@@ -12,13 +33,13 @@
 
 <div align=center><img width="500" src="img/endToEnd.png"/></div>
 
-### 1.2. 解密流程
+### 2.2. 解密流程
 
 - 获取私钥：根据 `ONT ID` 和 `PKIndex`，从私钥管理模块中找出对应私钥 `sk`。
 - 解密对称密钥：使用私钥 `sk` 解密出加密后的密钥 `ekey` 得到 AES 对称密钥 `key`。
 - 解密数据： 使用 AES 对称密钥 `key` 解密密文数据 `c` 得到明文数据 `m`。
 
-## 2. 基于口令的密钥派生函数 （PBKDF）
+## 3. 基于口令的密钥派生函数 （PBKDF）
 
 在密码学中，基于口令的密钥派生函数 (PBKDF) 是一类具有滑动计算成本的密钥派生函数，旨在减少加密密钥在面对暴力攻击时的脆弱性。
 
@@ -38,15 +59,6 @@ def pbkdf2(seed: str or bytes, dk_len: int) -> bytes:
     return key[:dk_len]
 ```
 
-## 3. 基于椭圆曲线的整合加密方案（ECIES）
+## 4. 基于椭圆曲线的整合加密方案（ECIES）
 
 基于椭圆曲线的整合加密方案是一种由 Victor Shoup 在2001年提出的混合加密体系。Shoup 的提案可以在[这里](https://www.shoup.net/papers/iso-2_1.pdf)找到。
-
-## 4. 本体分布式身份框架 （ONT ID）
-
-本体身份数字身份标识（简称为 ONT ID）是一个建立在 W3C 数字身份标识规范基础之上的分布式身份标识协议。ONT ID 为每个实体建立了一个以密码学为基础的数字身份，实现了数据授权的自主性以及所有权的确认，这使得身份和数据成为了用户真正可以控制的资产。
-
-如果你对 ONT ID 感兴趣，你可以在[这里](https://ontio.github.io/documentation/ontology_DID_zh.html)找到更多的信息。
-
-<div align=center><img height="400" src="img/ontid.jpg"/></div>
-

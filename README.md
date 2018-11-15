@@ -4,16 +4,25 @@ English | [中文](README_CN.md)
 
 <!-- TOC -->
 
-- [1. Ontology Distributed Identity Framework (ONT ID)](#1-ontology-distributed-identity-framework-ont-id)
-- [2. Encryption Service Based on ONT ID](#2-encryption-service-based-on-ont-id)
-    - [2.1. Encryption Process](#21-encryption-process)
-    - [2.2. Decryption Process](#22-decryption-process)
-- [3. Password-Based Key Derivation Function (PBKDF)](#3-password-based-key-derivation-function-pbkdf)
-- [4. Elliptic Curve Integrated Encryption Scheme (ECIES)](#4-elliptic-curve-integrated-encryption-scheme-ecies)
+- [1. Preparations](#1-preparations)
+- [2. Ontology Distributed Identity Framework (ONT ID)](#2-ontology-distributed-identity-framework-ont-id)
+- [3. Encryption Service Based on ONT ID](#3-encryption-service-based-on-ont-id)
+    - [3.1. Encryption Process](#31-encryption-process)
+    - [3.2. Decryption Process](#32-decryption-process)
+- [4. Password-Based Key Derivation Function (PBKDF)](#4-password-based-key-derivation-function-pbkdf)
+- [5. Elliptic Curve Integrated Encryption Scheme (ECIES)](#5-elliptic-curve-integrated-encryption-scheme-ecies)
 
 <!-- /TOC -->
 
-## 1. Ontology Distributed Identity Framework (ONT ID)
+## 1. Preparations
+
+Installation requires a Python 3.5 or later environment.
+
+```shell
+pip install ontology-ddxf-crypto
+```
+
+## 2. Ontology Distributed Identity Framework (ONT ID)
 
 Ontology DID (also called ONT ID) is a decentralized identity identification protocol based on W3C DID specifications. ONT ID establishes a cryptographically-based digital identity for each entity, allowing self-sovereign of data authorization and ownership confirmation, which makes the identity and data truly assets that the user can control.
 
@@ -21,9 +30,9 @@ If you are interested in ONT ID, you can find a detailed introduction [here](htt
 
 <div align=center><img height="400" src="img/ontid.jpg"/></div>
 
-## 2. Encryption Service Based on ONT ID
+## 3. Encryption Service Based on ONT ID
 
-### 2.1. Encryption Process
+### 3.1. Encryption Process
 
 There are three main steps to encrypting data:
 
@@ -33,13 +42,13 @@ There are three main steps to encrypting data:
 
 <div align=center><img width="500" src="img/endToEnd.png"/></div>
 
-### 2.2. Decryption Process
+### 3.2. Decryption Process
 
 - Query private key: Find the corresponding private key `sk` from the private key management module according to `ONT ID` and `PKIndex`.
 - Decrypt symmetric key: Use the private key `sk` to decrypt the encrypted key `ekey` to get the AES symmetric key `key`.
 - Decrypt data: Use the AES symmetric key `key` to decrypt the ciphertext data `c` to get the plaintext data `m`.
 
-## 3. Password-Based Key Derivation Function (PBKDF)
+## 4. Password-Based Key Derivation Function (PBKDF)
 
 In cryptography, PBKDF (Password-Based Key Derivation Function) is key derivation functions with a sliding computational cost, aimed to reduce the vulnerability of encrypted keys to brute force attacks.
 
@@ -59,6 +68,6 @@ def pbkdf2(seed: str or bytes, dk_len: int) -> bytes:
     return key[:dk_len]
 ```
 
-## 4. Elliptic Curve Integrated Encryption Scheme (ECIES)
+## 5. Elliptic Curve Integrated Encryption Scheme (ECIES)
 
 Elliptic Curve Integrated Encryption Scheme(also ECIES), is a hybrid encryption system proposed by Victor Shoup in 2001. Shoup's submission can be found at [here](https://www.shoup.net/papers/iso-2_1.pdf).
